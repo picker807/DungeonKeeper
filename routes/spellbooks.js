@@ -1,0 +1,1 @@
+// I think the spellbook can be a standalone collection with its own routes. In the model it would be explicitly connected to a character.
