@@ -1,8 +1,8 @@
 // config/passport.js
-const passport = require('passport');
+/*const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const GitHubStrategy = require('passport-github2').Strategy;
-const User = require('../models/userModel');
+//const User = require('../models/user');
 require('dotenv').config();
 
 const githubClientID = process.env.GITHUB_CLIENT_ID;
@@ -58,3 +58,4 @@ passport.deserializeUser((id, done) => {
 
 
 module.exports = passport;
+*/

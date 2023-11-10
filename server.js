@@ -2,7 +2,7 @@ const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
 const bodyParser = require("body-parser");
-const port = process.env.PORT || 3030;
+const port = process.env.PORT || 3000;
 const cors = require('cors');
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swagger.json');
@@ -13,6 +13,8 @@ const session = require('express-session');
 const crypto = require('crypto');
 
 const app = express();
+const secret = crypto.randomBytes(64).toString('hex');
+
 app
     .use(session({
         secret: secret,
@@ -22,7 +24,7 @@ app
     // Passport Initialization Middleware
     //.use(passport.initialize())
     //.use(passport.session())
-
+    .use(cors())
     // Routes
     .use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
     .use('/users', require('./routes/users' ))
@@ -47,9 +49,7 @@ app
 
     .use(logger('dev'))
     .use(express.json())
-    .use(express.static(path.join(__dirname, 'public')))
-    .use('/', indexRouter)
-    .use('/users', usersRouter)
+    //.use(express.static(path.join(__dirname, 'public'))
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
