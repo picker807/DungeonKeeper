@@ -27,10 +27,10 @@ app
     .use(cors())
     // Routes
     .use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
-    .use('/users', require('./routes/users' ))
-    .use('/characters', require('./routes/characters'))
-    .use('/spells', require('./routes/spells'))
-    .use('/spellbooks', require('./routes/spellbooks'))
+    //.use('/users', require('./routes/users' ))
+    //.use('/characters', require('./routes/characters'))
+    //.use('/spells', require('./routes/spells'))
+    //.use('/spellbooks', require('./routes/spellbooks'))
 
     .use(bodyParser.json())
     .use((req, res, next) => {
@@ -47,7 +47,6 @@ app
 //app.set('views', path.join(__dirname, 'views'));
 //app.set('view engine', 'pug');
 
-    .use(logger('dev'))
     .use(express.json())
     //.use(express.static(path.join(__dirname, 'public'))
 
