@@ -29,7 +29,7 @@ app
     .use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
     //.use('/users', require('./routes/users' ))
     //.use('/characters', require('./routes/characters'))
-    //.use('/spells', require('./routes/spells'))
+    .use('/spells', require('./routes/spells'))
     //.use('/spellbooks', require('./routes/spellbooks'))
 
     .use(bodyParser.json())

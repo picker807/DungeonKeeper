@@ -1,18 +1,23 @@
-const mongoose = require("mongoose");
+const db = require("../models");
+const Spell = db.spell;
 
 const getAllSpells = async (req, res, next) => {
-  try {
-    const spells = await mongoose.connection
-      .collection("spells")
-      .find({})
-      .toArray();
-    if (spells.length == 0) {
-      console.log("no people found");
-    }
-    res.status(200).json(people);
-  } catch (error) {
-    console.log(error);
-  }
+
+    Spell
+        .find({})
+        .then((data) => {
+            res.send(data);
+        })
+
+        .catch((err) => {
+            if (err.name === "ValidationError") {
+                res.status(400).json({
+                    message: err.message || 'An error occurred while getting spells.'
+                });
+            } else {
+                next(err);
+            }
+        });
 };
 
 module.exports = { getAllSpells };
