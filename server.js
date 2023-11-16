@@ -4,10 +4,9 @@ const path = require('path');
 const bodyParser = require("body-parser");
 const port = process.env.PORT || 3000;
 const cors = require('cors');
-const swaggerUi = require('swagger-ui-express');
-const swaggerDocument = require('./swagger.json');
+
 const db = require('./models');
-const middleware = require("./middleware/middleware");
+
 const passport = require('./config/passport');
 const session = require('express-session');
 const crypto = require('crypto');
@@ -21,18 +20,14 @@ app
         resave: true,
         saveUninitialized: true
     }))
+
     // Passport Initialization Middleware
     //.use(passport.initialize())
     //.use(passport.session())
-    .use(cors())
-    // Routes
-    .use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
-    //.use('/users', require('./routes/users' ))
-    //.use('/characters', require('./routes/characters'))
-    .use('/spells', require('./routes/spells'))
-    //.use('/spellbooks', require('./routes/spellbooks'))
 
+    .use(cors())
     .use(bodyParser.json())
+
     .use((req, res, next) => {
         res.setHeader('Access-Control-Allow-Origin', '*');
         res.setHeader(
@@ -43,12 +38,19 @@ app
         res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
         next();
     })
-// view engine setup
-//app.set('views', path.join(__dirname, 'views'));
-//app.set('view engine', 'pug');
 
-    .use(express.json())
-    //.use(express.static(path.join(__dirname, 'public'))
+    //.use(express.json())
+    
+    // Routes
+    .use('/', require('./routes'))
+    
+
+    // view engine setup
+    //app.set('views', path.join(__dirname, 'views'));
+    //app.set('view engine', 'pug');
+
+    
+//.use(express.static(path.join(__dirname, 'public'))
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -65,7 +67,7 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
-
+ 
 // Connect to Database
 db.mongoose
     .connect(db.url, {
