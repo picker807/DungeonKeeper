@@ -1,43 +1,277 @@
 {
-  "swagger": "2.0",
-  "info": {
-  "title": "Dungeon Keeper",
-  "description": "A database that organizes spells for Advanced Dungeons and Dragons Second Edition. Users can view spells, create characters and organize spellbooks based on their character.",
-  "version": "1.0.0"
+    "swagger": "2.0",
+    "info": {
+    "title": "Dungeon Keeper",
+    "description": "A database that organizes spells for Advanced Dungeons and Dragons Second Edition. Users can view spells, create characters and organize spellbooks based on their character.",
+    "version": "1.0.0"
 },
-  "host": "localhost:3000",
-  "basePath": "/",
-  "schemes": [
-  "http",
-  "https"
-  ],
-  "paths": {
-      "/spells": {
-      "get": {
-      "description": "Retrives all spells available",
-      "responses": {
-          "200": {
-              "description": "Request complete"
-          },
-          "400": {
-              "description": "Bad Request"
-          }
-      },
-      "/spells/{id}":{
-          "get":{
-              "description":"Retrieves one spell by Id",
-              "responses":{
-                  "200": {
-                      "description": "Request complete"
-                  },
-                  "400": {
-                      "description": "Bad Request"
-                  }
-              }
-          }
-
-      }
-  }
-  }
-}
+"host": "dungeonkeeper.onrender.com",
+"basePath": "/",
+"schemes": [
+"http",
+"https"
+],
+"tags":[{
+    "name":"Users",
+    "description":"Operations related to users"
+}, 
+    { "name": "Characters",
+    "description": "Operations related to characters"},
+    {"name": "Spells",
+    "description":" Operations related to spells"},
+{"name": "Spellbooks",
+"description": "Operations related to character spellbooks"}
+],
+"paths": {
+    "/spells": {
+        "get": {
+        "summary": "Get a list all of spells",
+        "responses": {
+            "200": {
+            "description": "A list of spells"
+        }
+        },
+        "tags": ["Spells"]
+        },
+        "post": {
+        "summary": "Create a new spell",
+        "responses": {
+        "201": {
+            "description": "Spell created successfully"
+        }
+        },
+        "tags": ["Spells"]
+        } 
+    },
+    "/spells/{spellId}": {
+        "put": {
+        "summary": "Update a spell by ID",
+        "parameters": [{
+            "type": "string",
+            "name": "spellId",
+            "in": "path",
+            "required": true
+            }],
+        "responses": {
+            "200": {
+            "description": "Spell updated successfully"
+            }
+        },
+        "tags": ["Spells"]
+    },
+    "get": {
+        "summary": "Get a spell by ID",
+        "parameters": [
+            {"type": "string",
+            "name": "spellId",
+            "in": "path",
+            "required": true
+            }
+        ],
+        "responses": {
+        "200": {
+            "description": "A single spell"
+        },
+        "404": {
+            "description": "Spell not found"
+        }
+        },
+        "tags": ["Spells"]
+    },
+    "delete": {
+        "summary": "Delete a spell by ID",
+        "parameters": [
+        {   "type": "string",
+            "name": "spellId",
+            "in": "path",
+            "required": true
+            }
+        ],
+        "responses": {
+            "204": {
+            "description": "Spell deleted successfully"
+            }
+        },
+        "tags": ["Spells"]
+        }
+    },
+    "/character": {
+        "post": {
+            "summary": "Create a new character",
+            "responses": {
+                "201": {
+                "description": "Character created successfully"
+            }
+        },
+        "tags": ["Characters"]
+        },
+        "put": {
+            "summary": "Update a character",
+            "responses": {
+                "200": {
+                "description": "Character updated successfully"
+            }
+        },
+        "tags": ["Characters"]
+        }
+    },
+    "/character/{characterId}": {
+        "parameters": [
+            {"type": "string",
+            "name": "characterId",
+            "in": "path",
+            "required": true            
+            }
+        ],
+        "get": {
+            "summary": "Get a character by ID",
+            "responses": {
+                "200": {
+                "description": "A single character"
+            },
+                "404": {
+                "description": "Character not found"
+            }
+        },
+        "tags": ["Characters"]
+        },
+        "delete": {
+            "summary": "Delete a character by ID",
+            "responses": {
+                "204": {
+                "description": "Character deleted successfully"
+            }
+        },
+        "tags": ["Characters"]
+        }
+    },
+    "/user": {
+        "post": {
+        "summary": "Create a new user",
+        "responses": {
+            "201": {
+                "description": "User created successfully"
+            }
+        },
+        "tags": ["Users"]
+        },
+        "put": {
+        "summary": "Update a user",
+        "responses": {
+            "200": {
+                "description": "User updated successfully"
+            }
+        },
+        "tags": ["Users"]
+        },
+        "get": {
+        "summary": "Get a list of users",
+        "responses": {
+            "200": {
+                "description": "A list of users"
+            }
+        },
+        "tags": ["Users"]
+        }
+    },
+    "/user/{userID}": {
+        "parameters": [
+            { "type":"string",
+            "name": "userID",
+            "in": "path",
+            "required": true
+            }
+        ],
+        "get": {
+            "summary": "Get a user by ID",
+            "responses": {
+                "200": {
+                    "description": "A single user"
+            },
+                "404": {
+                    "description": "User not found"
+            }
+        },
+        "tags": ["Users"]
+        },
+        "delete": {
+            "summary": "Delete a user by ID",
+            "responses": {
+                "204": {
+                    "description": "User deleted successfully"
+            }
+        },
+        "tags": ["Users"]
+        }
+    },
+    "/user/login": {
+        "get": {
+            "summary": "User login",
+            "responses": {
+                "200": {
+                    "description": "User logged in successfully"
+            }
+        },
+        "tags": ["Users"]
+        }
+    },
+    "/user/logout": {
+        "get": {
+            "summary": "User logout",
+            "responses": {
+                "200": {
+                    "description": "User logged out successfully"
+            }
+        },
+        "tags": ["Users"]
+        }
+    },
+    "/spellbook": {
+        "post": {
+        "summary": "Add a spell to a character's spellbook",
+            "responses": {
+                "201": {
+                    "description": "Spell added to spellbook successfully"
+            }
+        },
+        "tags": ["Spellbooks"]
+        },
+        "get": {
+        "summary": "Get a list of spells in a character's spellbook",
+            "responses": {
+                "200": {
+                    "description": "A list of spells in the spellbook"
+            }
+        },
+        "tags": ["Spellbooks"]
+        }
+    },
+    "/spellbook/{SpellbookId}": {
+        "parameters": [
+            { "type":"string",
+            "name": "characterId",
+            "in": "path",
+            "required": true
+        }
+        ],
+        "put": {
+        "summary": "Update a character's spellbook",
+            "responses": {
+                "200": {
+                    "description": "Spellbook updated successfully"
+            }
+        },
+        "tags": ["Spellbooks"]
+        },
+        "delete": {
+        "summary": "Delete a character's spellbook",
+            "responses": {
+                "204": {
+                    "description": "Spellbook deleted successfully"
+            }
+        },
+        "tags": ["Spellbooks"]
+        }
+    }
+    }
 }
