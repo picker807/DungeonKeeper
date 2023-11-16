@@ -128,3 +128,26 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+# Visual Studio temporary files
+.vs/
+*.vscode/
+*.suo
+*.user
+*.sln.docstates
+*.wsuo
+*.sqlite
+VSWorkSpaceState.json
+
+# Build results
+bin/
+obj/
+
+# Visual Studio profiling
+*.psess
+*.vsp
+*.vspx
+*.sap
+
+# Visual Studio extension manifest files
+*.vsixmanifest
