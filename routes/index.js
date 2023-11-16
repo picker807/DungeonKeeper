@@ -6,7 +6,7 @@ const middleware = require("../middleware/middleware");
 
 
 router
-    .use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
+    //.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
     //.use('/users', require('./routes/users' ))
     //.use('/characters', require('./routes/characters'))
     .use('/spells', require('./spells'))

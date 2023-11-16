@@ -9,7 +9,7 @@ const doc={
     schemes:['http','https']
 };
 
-const outputFile= './swagger1.json';
-const endpointFile = ['./routes/spells.js' ];
+const outputFile= './swagger.json';
+const endpointFile = ['./routes/index.js' ];
 
 swaggerAutogen(outputFile, endpointFile, doc)
