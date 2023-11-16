@@ -3,9 +3,10 @@
     "",
     "\\config",
     "\\controllers",
+    "\\middleware",
     "\\models",
     "\\routes"
   ],
-  "SelectedNode": "\\package.json",
+  "SelectedNode": "\\models\\index.js",
   "PreviewInSolutionExplorer": false
 }
