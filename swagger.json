@@ -226,7 +226,7 @@
         "tags": ["Users"]
         }
     },
-    "/character/spellbook": {
+    "/spellbook": {
         "post": {
         "summary": "Add a spell to a character's spellbook",
             "responses": {
@@ -246,7 +246,7 @@
         "tags": ["Spellbooks"]
         }
     },
-    "/character/{characterId}/spellbook": {
+    "/spellbook/{SpellbookId}": {
         "parameters": [
             { "type":"string",
             "name": "characterId",
