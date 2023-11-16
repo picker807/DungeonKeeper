@@ -1,23 +1,26 @@
 {
-    "swagger": "2.0",
-    "info": {
+  "swagger": "2.0",
+  "info": {
     "title": "Dungeon Keeper",
     "description": "A database that organizes spells for Advanced Dungeons and Dragons Second Edition. Users can view spells, create characters and organize spellbooks based on their character.",
     "version": "1.0.0"
-    },
-    "host": "localhost:8000",
-    "basePath": "/",
-    "schemes": [
+  },
+  "host": "localhost:3000",
+  "basePath": "/",
+  "schemes": [
     "http",
     "https"
-    ],
-    "paths": {
-    "/": {
+  ],
+  "paths": {
+    "/spells": {
         "get": {
-        "description": "",
+        "description": "retrives all spells in database",
         "responses": {
-            "default": {
-            "description": ""
+            "200": {
+                "description": "OK"
+            },
+            "400": {
+                "description": "Bad Request"
         }
         }
     }
