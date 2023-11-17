@@ -15,6 +15,8 @@ const secret = crypto.randomBytes(64).toString("hex");
 
 const swaggerUi = require("swagger-ui-express");
 const swaggerDoc = require("./swagger.json");
+const corsOptions = { origin: '*' };
+
 
 app
     /*  .use(
@@ -28,7 +30,7 @@ app
     // Passport Initialization Middleware
     //.use(passport.initialize())
     //.use(passport.session())
-    .use(cors())
+    .use(cors(corsOptions))
     .use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDoc))
     .use(bodyParser.json())
 
