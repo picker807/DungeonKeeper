@@ -25,7 +25,6 @@ app
   // Passport Initialization Middleware
   //.use(passport.initialize())
   //.use(passport.session())
-  .use("/", require("./routes"))
   .use(cors())
   .use(bodyParser.json())
   .use((req, res, next) => {
@@ -40,10 +39,10 @@ app
       "GET, POST, PUT, DELETE, OPTIONS"
     );
     next();
-  });
+  })
 
-// Routes
-
+  // Routes
+  .use("/", require("./routes"));
 //.use(express.json())
 
 // view engine setup
