@@ -12,6 +12,9 @@ const crypto = require("crypto");
 
 const app = express();
 const secret = crypto.randomBytes(64).toString("hex");
+const swaggerUi = require("swagger-ui-express");
+const swaggerDoc = require("../swagger.json");
+
 
 app
     .use(
@@ -27,6 +30,7 @@ app
     //.use(passport.session())
 
     .use(cors())
+    .use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDoc))
     .use(bodyParser.json())
 
     .use((req, res, next) => {
