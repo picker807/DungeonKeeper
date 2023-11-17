@@ -14,19 +14,19 @@ const app = express();
 const secret = crypto.randomBytes(64).toString("hex");
 
 app
-  .use(
+   /*  .use(
     session({
       secret: secret,
       resave: true,
       saveUninitialized: true,
     })
-  )
+  ) */
 
   // Passport Initialization Middleware
   //.use(passport.initialize())
   //.use(passport.session())
   // Routes
-  .use("/", require("./routes"))
+  
   .use(cors())
   .use(bodyParser.json())
   .use(express.json())
@@ -45,6 +45,7 @@ app
     next();
   })
 
+   .use("/", require("./routes"))
   
 
 // view engine setup
