@@ -1,4 +1,4 @@
 
 GET http://localhost:3000/spells HTTP/1.1
 ###
-GET https://dungeonkeeper.onrender.com/spells
+GET https://dungeonkeeper-pr-5.onrender.com/spells
