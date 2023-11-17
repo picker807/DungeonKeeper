@@ -1,11 +1,11 @@
 {
-    "swagger": "2.0",
+    "swagger": "3.0",
     "info": {
     "title": "Dungeon Keeper",
     "description": "A database that organizes spells for Advanced Dungeons and Dragons Second Edition. Users can view spells, create characters and organize spellbooks based on their character.",
     "version": "1.0.0"
 },
-"host": "https://dungeon-keeper.onrender.com",
+"host": "dungeon-keeper.onrender.com",
 "basePath": "/",
 "schemes": [
 
