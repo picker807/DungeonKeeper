@@ -13,6 +13,9 @@ const crypto = require("crypto");
 const app = express();
 const secret = crypto.randomBytes(64).toString("hex");
 
+const swaggerUi = require("swagger-ui-express");
+const swaggerDoc = require("./swagger.json");
+
 app
    /*  .use(
     session({
@@ -25,14 +28,9 @@ app
   // Passport Initialization Middleware
   //.use(passport.initialize())
   //.use(passport.session())
-  .use(cors())
-
-  // Routes
-  .use("/", require("./routes"))
-  
-    
-  .use(bodyParser.json())
-  
+    .use(cors())
+    .use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
+    .use(bodyParser.json())
 
   .use((req, res, next) => {
       res.setHeader("Access-Control-Allow-Origin", "*");
@@ -48,6 +46,8 @@ app
     next();
   })
 
+    // Routes
+    .use("/", require("./routes"))
    
 // view engine setup
 //app.set('views', path.join(__dirname, 'views'));
