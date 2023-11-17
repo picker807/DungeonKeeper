@@ -4,10 +4,11 @@ var router = express.Router();
 //const swaggerDocument = require("../swagger.json");
 //const middleware = require("../middleware/middleware");
 
-//.use('/users', require('./routes/users' ))
-//.use('/characters', require('./routes/characters'))
-router.use("/spells", require("./spells"));
+router
+  .use("/", require("./swagger"))
+  //.use('/users', require('./routes/users' ))
+  //.use('/characters', require('./routes/characters'))
+  .use("/spells", require("./spells"));
 //.use('/spellbooks', require('./routes/spellbooks'))
-router.use("/", require("./swagger"));
 
 module.exports = router;
