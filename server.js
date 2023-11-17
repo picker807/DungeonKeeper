@@ -9,6 +9,8 @@ const db = require("./models");
 const passport = require("./config/passport");
 const session = require("express-session");
 const crypto = require("crypto");
+const swaggerUi = require("swagger-ui-express");
+const swaggerDoc = require("../swagger.json");
 
 const app = express();
 const secret = crypto.randomBytes(64).toString("hex");
@@ -43,6 +45,7 @@ app
   .use(express.json())
   // .use(cors())
   // .use(bodyParser.json())
+  .use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDoc))
   .use("/", require("./routes"));
 // view engine setup
 //app.set('views', path.join(__dirname, 'views'));
