@@ -5,7 +5,7 @@ const router = express.Router();
 const spellController = require("../controllers/spells");
 
 //router.post("/", spellController.createSpell);
-router.get("/", spellController.getAllSpells);
+router.get('/', spellController.getAllSpells);
 /*router.get(
   "/:id", //middleware.validateId,
   spellController.getOneSpell
