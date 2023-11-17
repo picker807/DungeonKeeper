@@ -1,5 +1,5 @@
 {
-    "swagger": "3.0",
+    "swagger": "2.0",
     "info": {
     "title": "Dungeon Keeper",
     "description": "A database that organizes spells for Advanced Dungeons and Dragons Second Edition. Users can view spells, create characters and organize spellbooks based on their character.",
