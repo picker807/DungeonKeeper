@@ -33,7 +33,7 @@ app
 
 
     // Routes
-    .use("/", require("./routes"));
+    .use("/", require("./routes"))
 
     .use(cors(corsOptions))
     //.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDoc))
@@ -51,7 +51,7 @@ app
             "GET, POST, PUT, DELETE, OPTIONS"
         );
         next();
-    })
+    });
 
    
    
