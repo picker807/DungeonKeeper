@@ -6,7 +6,7 @@ const getAllSpells = async (req, res, next) => {
     Spell
         .find({})
         .then((data) => {
-            console.log(data);
+            console.log("This data:" , data);
             res.send(data);
         })
 
