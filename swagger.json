@@ -8,7 +8,6 @@
 "host": "dungeonkeeper.onrender.com",
 "basePath": "/",
 "schemes": [
-"http",
 "https"
 ],
 "tags":[{

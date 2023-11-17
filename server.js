@@ -29,6 +29,7 @@ app
   .use("/", require("./routes"))
   .use(cors())
   .use(bodyParser.json())
+  .use(express.json())
 
   .use((req, res, next) => {
     res.setHeader("Access-Control-Allow-Origin", "*");
@@ -42,9 +43,9 @@ app
       "GET, POST, PUT, DELETE, OPTIONS"
     );
     next();
-  });
+  })
 
-//.use(express.json())
+  
 
 // view engine setup
 //app.set('views', path.join(__dirname, 'views'));
