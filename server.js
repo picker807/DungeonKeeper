@@ -10,7 +10,7 @@ const passport = require("./config/passport");
 const session = require("express-session");
 const crypto = require("crypto");
 const swaggerUi = require("swagger-ui-express");
-const swaggerDoc = require("../swagger.json");
+const swaggerDoc = require("./swagger.json");
 
 const app = express();
 const secret = crypto.randomBytes(64).toString("hex");
