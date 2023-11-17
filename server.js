@@ -27,7 +27,8 @@ app
   //.use(passport.session())
   // Routes
   
-  .use(cors())
+    .use(cors())
+    .use("/", require("./routes"))
   .use(bodyParser.json())
   .use(express.json())
 
@@ -45,7 +46,7 @@ app
     next();
   })
 
-   .use("/", require("./routes"))
+   
   
 
 // view engine setup
