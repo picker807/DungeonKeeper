@@ -25,10 +25,6 @@ app
   // Passport Initialization Middleware
   //.use(passport.initialize())
   //.use(passport.session())
-  .use(express.json())
-  // .use(cors())
-  // .use(bodyParser.json())
-  .use("/", require("./routes"))
   .use((req, res, next) => {
     res.setHeader("Access-Control-Allow-Origin", "*");
     res.setHeader(
@@ -41,10 +37,13 @@ app
       "GET, POST, PUT, DELETE, OPTIONS"
     );
     next();
-  });
+  })
 
-// Routes
-
+  // Routes
+  .use(express.json())
+  // .use(cors())
+  // .use(bodyParser.json())
+  .use("/", require("./routes"));
 // view engine setup
 //app.set('views', path.join(__dirname, 'views'));
 //app.set('view engine', 'pug');
