@@ -151,3 +151,4 @@ obj/
 
 # Visual Studio extension manifest files
 *.vsixmanifest
+.vs/DungeonKeeper/v17/.wsuo
