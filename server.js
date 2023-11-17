@@ -9,8 +9,6 @@ const db = require("./models");
 const passport = require("./config/passport");
 const session = require("express-session");
 const crypto = require("crypto");
-const swaggerUi = require("swagger-ui-express");
-const swaggerDoc = require("./swagger.json");
 
 const app = express();
 const secret = crypto.randomBytes(64).toString("hex");
@@ -29,7 +27,6 @@ app
   //.use(passport.session())
   .use(cors())
   // .use(bodyParser.json())
-  .use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDoc))
   .use("/", require("./routes"))
   .use((req, res, next) => {
     res.setHeader("Access-Control-Allow-Origin", "*");
