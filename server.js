@@ -26,14 +26,14 @@ app
   //.use(passport.initialize())
   //.use(passport.session())
   // Routes
-  
-    .use(cors())
-    .use("/", require("./routes"))
+  .use("/", require("./routes"))
+  .use(cors())
+    
   .use(bodyParser.json())
   .use(express.json())
 
   .use((req, res, next) => {
-    res.setHeader("Access-Control-Allow-Origin", "*");
+      res.setHeader("Access-Control-Allow-Origin", "https://dungeonkeeper-pr-5.onrender.com");
     res.setHeader(
       "Access-Control-Allow-Headers",
       "Origin, X-Requested-With, Content-Type, Accept, Z-Key"
