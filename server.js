@@ -29,7 +29,7 @@ app
   //.use(passport.initialize())
   //.use(passport.session())
     .use(cors())
-    .use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
+    .use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDoc))
     .use(bodyParser.json())
 
   .use((req, res, next) => {
