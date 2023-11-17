@@ -14,37 +14,36 @@ const app = express();
 const secret = crypto.randomBytes(64).toString("hex");
 
 app
-    .use(
-        session({
-            secret: secret,
-            resave: true,
-            saveUninitialized: true,
-        })
-    )
-
-    // Passport Initialization Middleware
-    //.use(passport.initialize())
-    //.use(passport.session())
-
-    .use(cors())
-    .use(bodyParser.json())
-
-    .use((req, res, next) => {
-        res.setHeader("Access-Control-Allow-Origin", "*");
-        res.setHeader(
-            "Access-Control-Allow-Headers",
-            "Origin, X-Requested-With, Content-Type, Accept, Z-Key"
-        );
-        res.setHeader("Content-Type", "application/json");
-        res.setHeader(
-            "Access-Control-Allow-Methods",
-            "GET, POST, PUT, DELETE, OPTIONS"
-        );
-        next();
+  .use(
+    session({
+      secret: secret,
+      resave: true,
+      saveUninitialized: true,
     })
+  )
 
-    // Routes
-    .use("/", require("./routes"));
+  // Passport Initialization Middleware
+  //.use(passport.initialize())
+  //.use(passport.session())
+
+  .use(cors())
+  .use(bodyParser.json())
+  .use("/", require("./routes"))
+  .use((req, res, next) => {
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.setHeader(
+      "Access-Control-Allow-Headers",
+      "Origin, X-Requested-With, Content-Type, Accept, Z-Key"
+    );
+    res.setHeader("Content-Type", "application/json");
+    res.setHeader(
+      "Access-Control-Allow-Methods",
+      "GET, POST, PUT, DELETE, OPTIONS"
+    );
+    next();
+  });
+
+// Routes
 
 //.use(express.json())
 
