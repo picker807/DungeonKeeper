@@ -10,7 +10,7 @@ router
   //.use('/characters', require('./routes/characters'))
   .use("/spells", require("./spells"))
   //.use('/spellbooks', require('./routes/spellbooks'))
-  //.use("/", require("./swagger"));
+  .use("/", require("./swagger"));
   
 
 module.exports = router;
