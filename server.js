@@ -17,37 +17,37 @@ const swaggerUi = require("swagger-ui-express");
 const swaggerDoc = require("./swagger.json");
 
 app
-   /*  .use(
-    session({
-      secret: secret,
-      resave: true,
-      saveUninitialized: true,
-    })
-  ) */
+    /*  .use(
+     session({
+       secret: secret,
+       resave: true,
+       saveUninitialized: true,
+     })
+   ) */
 
-  // Passport Initialization Middleware
-  //.use(passport.initialize())
-  //.use(passport.session())
+    // Passport Initialization Middleware
+    //.use(passport.initialize())
+    //.use(passport.session())
     .use(cors())
     .use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDoc))
     .use(bodyParser.json())
 
-  .use((req, res, next) => {
-      res.setHeader("Access-Control-Allow-Origin", "*");
-      res.setHeader(
-      "Access-Control-Allow-Headers",
-      "Origin, X-Requested-With, Content-Type, Accept, Z-Key"
-    );
-    res.setHeader("Content-Type", "application/json");
-    res.setHeader(
-      "Access-Control-Allow-Methods",
-      "GET, POST, PUT, DELETE, OPTIONS"
-    );
-    next();
-  })
+    .use((req, res, next) => {
+        res.setHeader("Access-Control-Allow-Origin", "*");
+        res.setHeader(
+            "Access-Control-Allow-Headers",
+            "Origin, X-Requested-With, Content-Type, Accept, Z-Key"
+        );
+        res.setHeader("Content-Type", "application/json");
+        res.setHeader(
+            "Access-Control-Allow-Methods",
+            "GET, POST, PUT, DELETE, OPTIONS"
+        );
+        next();
+    })
 
     // Routes
-    .use("/", require("./routes"))
+    .use("/", require("./routes"));
    
 // view engine setup
 //app.set('views', path.join(__dirname, 'views'));
