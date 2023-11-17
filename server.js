@@ -13,7 +13,7 @@ const crypto = require("crypto");
 const app = express();
 const secret = crypto.randomBytes(64).toString("hex");
 const swaggerUi = require("swagger-ui-express");
-const swaggerDoc = require("../swagger.json");
+const swaggerDoc = require("./swagger.json");
 
 
 app
