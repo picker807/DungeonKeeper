@@ -25,10 +25,9 @@ app
   // Passport Initialization Middleware
   //.use(passport.initialize())
   //.use(passport.session())
-
+  .use("/", require("./routes"))
   .use(cors())
   .use(bodyParser.json())
-  .use("/", require("./routes"))
   .use((req, res, next) => {
     res.setHeader("Access-Control-Allow-Origin", "*");
     res.setHeader(
