@@ -25,6 +25,7 @@ app
   // Passport Initialization Middleware
   //.use(passport.initialize())
   //.use(passport.session())
+  .use(express.json())
   .use(cors())
   .use(bodyParser.json())
   .use((req, res, next) => {
@@ -43,7 +44,6 @@ app
 
   // Routes
   .use("/", require("./routes"));
-//.use(express.json())
 
 // view engine setup
 //app.set('views', path.join(__dirname, 'views'));
