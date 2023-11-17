@@ -30,6 +30,11 @@ app
     // Passport Initialization Middleware
     //.use(passport.initialize())
     //.use(passport.session())
+
+
+    // Routes
+    .use("/", require("./routes"));
+
     .use(cors(corsOptions))
     //.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDoc))
     .use(bodyParser.json())
@@ -48,8 +53,7 @@ app
         next();
     })
 
-    // Routes
-    .use("/", require("./routes"));
+   
    
 // view engine setup
 //app.set('views', path.join(__dirname, 'views'));
