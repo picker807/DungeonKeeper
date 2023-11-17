@@ -28,7 +28,7 @@ app
   //.use(passport.initialize())
   //.use(passport.session())
   .use(cors())
-  .use(bodyParser.json())
+  // .use(bodyParser.json())
   .use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDoc))
   .use("/", require("./routes"))
   .use((req, res, next) => {
