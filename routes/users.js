@@ -6,11 +6,8 @@ const userController = require('../controllers/users');
 
 router.post('/', userController.createUser);
 router.get('/', userController.getAllUsers);
-router.get('/:id', //middleware.validateId,
-    userController.getOneUser);
-router.put('/:id', //middleware.validateId,
-    userController.updateUser);
-router.delete('/:id', //middleware.validateId,
-    userController.deleteUser);
+router.get('/:id', /*middleware.validateId,*/ userController.getOneUser);
+router.put('/:id', /*middleware.validateId,*/ userController.updateUser);
+router.delete('/:id', /*middleware.validateId,*/ userController.deleteUser);
 
 module.exports = router;
