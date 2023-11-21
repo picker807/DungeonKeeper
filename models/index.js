@@ -10,6 +10,8 @@ db.url = process.env.MONGODB_URI;
 db.githubClientId = process.env.GITHUB_CLIENT_ID;
 db.githubClientSecret = process.env.GITHUB_CLIENT_SECRET;
 db.spell = require('./spells.js');
-//db.user = require('./userModel.js');
+db.user = require('./users.js');
+db.character = require('./characters.js');
+db.spellbook = require('./spellbooks.js');
 
 module.exports = db; 
