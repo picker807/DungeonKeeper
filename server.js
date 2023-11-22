@@ -42,7 +42,7 @@ app
     );
     next();
   })
-  .use(errorHandler);
+  //.use(errorHandler);
 
 // Routes
 // .use(express.json())

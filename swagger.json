@@ -33,7 +33,14 @@
               "items":{ 
                 "$ref": "#/definitions/Spells"       
               }
+              
             }
+          },
+          "400":{
+            "description":"Bad Request"
+          },
+          "500": {
+            "description": "Server error"
           }
         },
         "tags": ["Spells"]
@@ -47,63 +54,7 @@
             "description": "The spell object",
             "required": true,
             "schema": {
-              "type": "object",
-              "properties": {
-                "name": {
-                  "type": "string",
-                  "description": "Spell name",
-                  "example": "Fireball"
-                },
-                "level": {
-                  "type": "integer",
-                  "description": "Spell level",
-                  "example": 3
-                },
-                "school": {
-                  "type": "string",
-                  "description": "Spell school",
-                  "example": "Evocation"
-                },
-                "components": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  },
-                  "description": "Spell components",
-                  "example": ["Verbal", "Somatic"]
-                },
-                "range": {
-                  "type": "string",
-                  "description": "Spell range",
-                  "example": "120 feet"
-                },
-                "areaOfEffect": {
-                  "type": "string",
-                  "description": "Area of effect",
-                  "example": "20-foot radius"
-                },
-                "save": {
-                  "type": "string",
-                  "description": "Saving throw information",
-                  "example": "Dexterity"
-                },
-                "castingTime": {
-                  "type": "string",
-                  "description": "Casting time",
-                  "example": "1 action"
-                },
-                "duration": {
-                  "type": "string",
-                  "description": "Spell duration",
-                  "example": "1 minute"
-                },
-                "description": {
-                  "type": "string",
-                  "description": "Spell description",
-                  "example": "A fiery explosion"
-                }
-              },
-              "required": ["name", "level", "school", "components", "range", "areaOfEffect", "save", "castingTime", "duration", "description"]
+              "$ref":"#/definitions/Spells"
             }
           }
         ],
@@ -113,6 +64,9 @@
         },
         "400":{ 
           "description":"Bad Request"       
+        },
+        "500": {
+          "description": "Server error"
         }
       },
         "tags": ["Spells"]
@@ -143,6 +97,12 @@
             "schema": {
               "$ref": "#/definitions/Spells"
             }
+          },
+          "400":{
+            "description":"Bad Request"
+          },
+          "500": {
+            "description": "Server error"
           }
         },
         "tags": ["Spells"]
@@ -165,6 +125,9 @@
         },
         "404": {
             "description": "Spell not found"
+        },
+        "500": {
+          "description": "Server error"
         }
         },
         "tags": ["Spells"]
@@ -187,6 +150,9 @@
             },
             "404": {
               "description": "Spell not found"
+          },
+          "500": {
+            "description": "Server error"
           }
         },
         "tags": ["Spells"]
@@ -195,48 +161,106 @@
     "/character": {
         "post": {
             "summary": "Create a new character",
+            "parameters": [{"name":"character",
+            "in":"body",
+            "description": "The character Object",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Characters"
+            }
+
+            }],
             "responses": {
                 "201": {
                 "description": "Character created successfully"
+            },
+            "400":{
+              "description":"Bad Request"
+            },
+            "500": {
+              "description": "Server error"
+            }
+        },
+        "tags": ["Characters"]
+        }
+      },
+    "/character/{characterId}": {
+        "get": {
+            "summary": "Get a character by ID",
+            "parameters": [
+              {"type": "string",
+              "name": "characterId",
+              "in": "path",
+              "required": true            
+              }
+          ],
+            "responses": {
+                "200": {
+                "description": "A single character",
+                "schema": {
+                  "$ref": "#/definitions/Characters"
+                  }
+                },
+                "404": {
+                "description": "Character not found"
+            },
+            "500": {
+              "description": "Server error"
             }
         },
         "tags": ["Characters"]
         },
         "put": {
-            "summary": "Update a character",
-            "responses": {
-                "200": {
-                "description": "Character updated successfully"
-            }
-        },
-        "tags": ["Characters"]
-        }
-    },
-    "/character/{characterId}": {
-        "parameters": [
-            {"type": "string",
-            "name": "characterId",
+          "summary": "Update a character",
+          "parameters": [{
+            "type": "string",
+            "name": "CharacterId",
             "in": "path",
-            "required": true            
-            }
-        ],
-        "get": {
-            "summary": "Get a character by ID",
-            "responses": {
-                "200": {
-                "description": "A single character"
+            "required": true
             },
-                "404": {
-                "description": "Character not found"
+            {
+            "name": "updatedCharacter",
+            "in": "body",
+            "description": "The updated Character object",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Characters"
             }
-        },
-        "tags": ["Characters"]
-        },
+          }
+          ],
+          "responses": {
+              "200": {
+              "description": "Character updated successfully",
+              "schema":{
+                "$ref": "#/definitions/Characters"
+              }
+          },
+          "400":{
+            "description":"Bad Request"
+          },
+          "500": {
+            "description": "Server error"
+          }
+      },
+      "tags": ["Characters"]
+      },
+  
         "delete": {
             "summary": "Delete a character by ID",
+            "parameters": [
+              {"type": "string",
+              "name": "characterId",
+              "in": "path",
+              "required": true            
+              }
+          ],
             "responses": {
                 "204": {
                 "description": "Character deleted successfully"
+            },
+            "400":{"description": "Bad Request"},
+            "500": {
+              "description": "Server error"
             }
         },
         "tags": ["Characters"]
@@ -245,11 +269,6 @@
     "/user": {
         "post": {
         "summary": "Create a new user",
-        "responses": {
-            "201": {
-                "description": "User created successfully"
-            }
-        },
         "parameters": [
           {"name":"user",
           "in":"body",
@@ -258,8 +277,21 @@
           "schema": {
             "$ref":"#/definitions/User"
           }
-
-        }],
+          }],
+        "responses": {
+            "201": {
+                "description": "User created successfully",
+                "schema":{
+                  "$ref": "#/definitions/User"
+                }
+            },
+            "400":{
+              "description": "Bad Request"
+            },
+            "500": {
+              "description": "Server error"
+            }
+        },
         "tags": ["Users"]
         },
         "put": {
@@ -283,7 +315,16 @@
         ],
         "responses": {
             "200": {
-                "description": "User updated successfully"
+                "description": "User updated successfully",
+                "schema":{
+                  "$ref": "#/definitions/User"
+                }
+            },
+            "400":{
+              "description": "Bad Request"
+            },
+            "500": {
+              "description": "Server error"
             }
         },
         "tags": ["Users"]
@@ -325,18 +366,33 @@
             },
                 "404": {
                     "description": "User not found"
+            },
+            "500": {
+              "description": "Server error"
             }
         },
         "tags": ["Users"]
         },
         "delete": {
             "summary": "Delete a user by ID",
+            "parameters":[{
+              "name": "userID",
+              "in": "path",
+              "required": true,
+              "type":"string"
+            }],
             "responses": {
                 "204": {
                     "description": "User deleted successfully",
                     "schema":{
                       "$ref": "#/definitions/User"
                     }
+            },
+            "404": {
+                "description": "User not found"
+            },
+            "500": {
+                "description": "Server error"
             }
         },
         "tags": ["Users"]
@@ -345,6 +401,7 @@
     "/user/login": {
         "get": {
             "summary": "User login",
+
             "responses": {
                 "200": {
                     "description": "User logged in successfully",
@@ -400,7 +457,12 @@
             "description": "Spellbook Created",
             "schema":{
               "$ref":"#/definitions/Spellbooks"
-            }}
+            }},
+            "400":{
+              "description":"Bad Request"},
+            "500": {
+              "description": "Server error"
+            }
         },
         "tags": ["Spellbooks"]
         },
@@ -412,6 +474,11 @@
                     "schema":{
                       "$ref": "#/definitions/Spellbooks"
                     }
+            },
+            "400":{
+              "description":"Bad Request"},
+            "500": {
+              "description": "Server error"
             }
         },
         "tags": ["Spellbooks"]
@@ -442,6 +509,11 @@
                     "schema":{
                       "$ref":"#/definitions/Spellbooks"
                     }
+            },
+            "400":{
+              "description":"Bad Request"},
+            "500": {
+              "description": "Server error"
             }
         },
         "tags": ["Spellbooks"]
@@ -462,12 +534,17 @@
                     "$ref": "#/definitions/Spellbooks"
                     }
             },
-            "404":{"description":"Spellbook Not Found"}
-        },
+            "404":{"description":"Spellbook not found"},
+            "500": {
+              "description": "Server error"
+            }
+          },
+          
         "tags": ["Spellbooks"]
         }
-    }
-  },
+      }
+    },
+    
   "definitions":{
     "User":{
       "type":"object",
@@ -493,7 +570,12 @@
           "type":"string"
         },
         "spells":{
-          "type":"array"
+          "type":"array",
+          "items":{
+            "type":"object",
+            "$ref": "#/definitions/Spells"
+
+          }
         }
       }
     },
@@ -509,7 +591,9 @@
       "school":{
         "type":"string"},
       "components":{
-        "type":"array"},
+        "type":"array",
+        "items":{
+          "type":"string"}},
       "range":{
         "type":"string"},
       "areaOfEffect":{
