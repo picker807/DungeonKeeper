@@ -27,18 +27,94 @@
         "summary": "Get a list all of spells",
         "responses": {
             "200": {
-            "description": "A list of spells"
-        }
+            "description": "A list of spells",
+            "schema":{
+              "type":"array",
+              "items":{ 
+                "$ref": "#/definitions/Spells"       
+              }
+            }
+          }
         },
         "tags": ["Spells"]
         },
         "post": {
         "summary": "Create a new spell",
+        "parameters": [
+          {
+            "name": "spell",
+            "in": "body",
+            "description": "The spell object",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "description": "Spell name",
+                  "example": "Fireball"
+                },
+                "level": {
+                  "type": "integer",
+                  "description": "Spell level",
+                  "example": 3
+                },
+                "school": {
+                  "type": "string",
+                  "description": "Spell school",
+                  "example": "Evocation"
+                },
+                "components": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "description": "Spell components",
+                  "example": ["Verbal", "Somatic"]
+                },
+                "range": {
+                  "type": "string",
+                  "description": "Spell range",
+                  "example": "120 feet"
+                },
+                "areaOfEffect": {
+                  "type": "string",
+                  "description": "Area of effect",
+                  "example": "20-foot radius"
+                },
+                "save": {
+                  "type": "string",
+                  "description": "Saving throw information",
+                  "example": "Dexterity"
+                },
+                "castingTime": {
+                  "type": "string",
+                  "description": "Casting time",
+                  "example": "1 action"
+                },
+                "duration": {
+                  "type": "string",
+                  "description": "Spell duration",
+                  "example": "1 minute"
+                },
+                "description": {
+                  "type": "string",
+                  "description": "Spell description",
+                  "example": "A fiery explosion"
+                }
+              },
+              "required": ["name", "level", "school", "components", "range", "areaOfEffect", "save", "castingTime", "duration", "description"]
+            }
+          }
+        ],
         "responses": {
         "201": {
             "description": "Spell created successfully"
-        }
         },
+        "400":{ 
+          "description":"Bad Request"       
+        }
+      },
         "tags": ["Spells"]
         } 
     },
@@ -50,11 +126,24 @@
             "name": "spellId",
             "in": "path",
             "required": true
-            }],
+            },
+            {
+            "name": "updatedSpell",
+            "in": "body",
+            "description": "The updated spell object",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Spells"
+            }
+          }
+          ],
         "responses": {
             "200": {
-            "description": "Spell updated successfully"
+            "description": "Spell updated successfully",
+            "schema": {
+              "$ref": "#/definitions/Spells"
             }
+          }
         },
         "tags": ["Spells"]
     },
@@ -69,7 +158,10 @@
         ],
         "responses": {
         "200": {
-            "description": "A single spell"
+            "description": "A single spell",
+            "schema": {
+              "$ref": "#/definitions/Spells"
+            }
         },
         "404": {
             "description": "Spell not found"
@@ -88,8 +180,14 @@
         ],
         "responses": {
             "204": {
-            "description": "Spell deleted successfully"
+            "description": "Spell deleted successfully",
+            "schema": {
+              "$ref": "#/definitions/Spells"
             }
+            },
+            "404": {
+              "description": "Spell not found"
+          }
         },
         "tags": ["Spells"]
         }
@@ -152,10 +250,37 @@
                 "description": "User created successfully"
             }
         },
+        "parameters": [
+          {"name":"user",
+          "in":"body",
+          "description": "The User Object",
+          "required": true,
+          "schema": {
+            "$ref":"#/definitions/User"
+          }
+
+        }],
         "tags": ["Users"]
         },
         "put": {
         "summary": "Update a user",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "user",
+            "in": "body",
+            "description": "The updated user object",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        ],
         "responses": {
             "200": {
                 "description": "User updated successfully"
@@ -167,25 +292,36 @@
         "summary": "Get a list of users",
         "responses": {
             "200": {
-                "description": "A list of users"
-            }
+                "description": "Success",
+                "schema": {
+                  "$ref": "#/definitions/User"
+                }
+              },
+              "400": {
+                "description": "Bad Request"
+              },
+              "500": {
+                "description": "Server error"
+              }
         },
         "tags": ["Users"]
         }
     },
     "/user/{userID}": {
-        "parameters": [
-            { "type":"string",
+        "get": {
+          "summary":"Get user by ID",
+          "parameters": [{ 
             "name": "userID",
             "in": "path",
-            "required": true
-            }
-        ],
-        "get": {
-            "summary": "Get a user by ID",
+            "required": true,
+            "type":"string"
+            }],
             "responses": {
                 "200": {
-                    "description": "A single user"
+                    "description": "A single user",
+                    "schema":{
+                      "$ref":"#/definitions/User"
+                    }
             },
                 "404": {
                     "description": "User not found"
@@ -197,7 +333,10 @@
             "summary": "Delete a user by ID",
             "responses": {
                 "204": {
-                    "description": "User deleted successfully"
+                    "description": "User deleted successfully",
+                    "schema":{
+                      "$ref": "#/definitions/User"
+                    }
             }
         },
         "tags": ["Users"]
@@ -208,7 +347,10 @@
             "summary": "User login",
             "responses": {
                 "200": {
-                    "description": "User logged in successfully"
+                    "description": "User logged in successfully",
+                    "schema":{
+                      "$ref": "#/definitions/User"
+                    }
             }
         },
         "tags": ["Users"]
@@ -219,7 +361,10 @@
             "summary": "User logout",
             "responses": {
                 "200": {
-                    "description": "User logged out successfully"
+                    "description": "User logged out successfully",
+                    "schema":{
+                      "$ref": "#/definitions/User"
+                    }
             }
         },
         "tags": ["Users"]
@@ -228,49 +373,159 @@
     "/spellbook": {
         "post": {
         "summary": "Add a spell to a character's spellbook",
-            "responses": {
-                "201": {
-                    "description": "Spell added to spellbook successfully"
+        "parameters": [
+          {
+            "name": "spellbook",
+            "in": "body",
+            "description": "The spellbook object",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "spells": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/Spells"
+                  }
+                }
+              }
             }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Spellbook Created",
+            "schema":{
+              "$ref":"#/definitions/Spellbooks"
+            }}
         },
         "tags": ["Spellbooks"]
         },
         "get": {
-        "summary": "Get a list of spells in a character's spellbook",
+        "summary": "Get all Spellbooks",
             "responses": {
                 "200": {
-                    "description": "A list of spells in the spellbook"
+                    "description": "Ok",
+                    "schema":{
+                      "$ref": "#/definitions/Spellbooks"
+                    }
             }
         },
         "tags": ["Spellbooks"]
         }
     },
     "/spellbook/{SpellbookId}": {
-        "parameters": [
-            { "type":"string",
-            "name": "characterId",
-            "in": "path",
-            "required": true
-        }
-        ],
         "put": {
         "summary": "Update a character's spellbook",
+        "parameters": [
+          { "type":"string",
+          "name": "characterId",
+          "in": "path",
+          "required": true
+        },
+        {
+          "name": "updatedSpellbook",
+          "in": "body",
+          "description": "The updated spellbook object",
+          "required": true,
+          "schema": {
+            "$ref": "#/definitions/Spellbooks"
+          }
+        }
+      ],
             "responses": {
                 "200": {
-                    "description": "Spellbook updated successfully"
+                    "description": "Spellbook updated successfully",
+                    "schema":{
+                      "$ref":"#/definitions/Spellbooks"
+                    }
             }
         },
         "tags": ["Spellbooks"]
         },
         "delete": {
-        "summary": "Delete a character's spellbook",
+        "summary": "Delete a character's spellbook by ID",
+        "parameters": [
+          {
+            "type": "string",
+            "name": "SpellbookId",
+            "in": "path",
+            "required": true
+          }],
             "responses": {
                 "204": {
-                    "description": "Spellbook deleted successfully"
-            }
+                  "description": "Spellbook deleted successfully",
+                  "schema": {
+                    "$ref": "#/definitions/Spellbooks"
+                    }
+            },
+            "404":{"description":"Spellbook Not Found"}
         },
         "tags": ["Spellbooks"]
         }
     }
+  },
+  "definitions":{
+    "User":{
+      "type":"object",
+      "properties": {
+        "githubId": {
+          "type": "string"
+        },
+        "username": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "tasksAssigned": {
+          "type": "string"
+        }
+      }
+    },
+    "Spellbooks":{
+      "type":"object",
+      "properties":{
+        "name":{
+          "type":"string"
+        },
+        "spells":{
+          "type":"array"
+        }
+      }
+    },
+    "Spells":{
+      "type":"object",
+      "properties": {
+        "name":{
+          "type":"string"
+      },
+      "level":{
+        "type":"number"
+      },
+      "school":{
+        "type":"string"},
+      "components":{
+        "type":"array"},
+      "range":{
+        "type":"string"},
+      "areaOfEffect":{
+        "type":"string"},
+      "save":{
+        "type":"string"},
+      "castingTime":{
+        "type":"string"},
+      "duration":{
+        "type":"string"},
+      "description":{
+        "type":"string"}
+    },
+    "Character":{
+      
     }
+  }
+}
 }
