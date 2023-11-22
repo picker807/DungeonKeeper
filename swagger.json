@@ -522,10 +522,26 @@
         "type":"string"},
       "description":{
         "type":"string"}
-    },
-    "Character":{
-      
     }
+  },
+    "Characters":{
+      "type":"object",
+      "properties":{
+        "name":{
+          "type":"string"
+        },
+        "class":{
+          "type":"string"
+        },
+        "level":{
+          "type":"number"
+        },
+        "spellbook":{
+          "type":"string"
+        }
+    }
+
   }
 }
 }
+
