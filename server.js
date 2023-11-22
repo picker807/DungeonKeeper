@@ -5,6 +5,7 @@ const bodyParser = require("body-parser");
 const port = process.env.PORT || 3000;
 const cors = require("cors");
 const db = require("./models");
+const errorHandler = require("./middleware/middleware");
 
 const passport = require("./config/passport");
 const session = require("express-session");
@@ -40,7 +41,8 @@ app
       "GET, POST, PUT, DELETE, OPTIONS"
     );
     next();
-  });
+  })
+  .use(errorHandler);
 
 // Routes
 // .use(express.json())
