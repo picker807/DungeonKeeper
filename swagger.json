@@ -5,10 +5,10 @@
     "description": "A database that organizes spells for Advanced Dungeons and Dragons Second Edition. Users can view spells, create characters and organize spellbooks based on their character.",
     "version": "1.0.0"
 },
-"host": "dungeon-keeper.onrender.com",
+"host": "localhost:3000",
 "basePath": "/",
 "schemes": [
-"https"
+"http"
 ],
 "tags":[{
     "name":"Users",
@@ -214,7 +214,7 @@
           "summary": "Update a character",
           "parameters": [{
             "type": "string",
-            "name": "CharacterId",
+            "name": "characterId",
             "in": "path",
             "required": true
             },
@@ -294,41 +294,6 @@
         },
         "tags": ["Users"]
         },
-        "put": {
-        "summary": "Update a user",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "user",
-            "in": "body",
-            "description": "The updated user object",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/User"
-            }
-          }
-        ],
-        "responses": {
-            "200": {
-                "description": "User updated successfully",
-                "schema":{
-                  "$ref": "#/definitions/User"
-                }
-            },
-            "400":{
-              "description": "Bad Request"
-            },
-            "500": {
-              "description": "Server error"
-            }
-        },
-        "tags": ["Users"]
-        },
         "get": {
         "summary": "Get a list of users",
         "responses": {
@@ -348,56 +313,95 @@
         "tags": ["Users"]
         }
     },
-    "/user/{userID}": {
-        "get": {
-          "summary":"Get user by ID",
-          "parameters": [{ 
-            "name": "userID",
-            "in": "path",
-            "required": true,
-            "type":"string"
-            }],
-            "responses": {
-                "200": {
-                    "description": "A single user",
-                    "schema":{
-                      "$ref":"#/definitions/User"
-                    }
-            },
-                "404": {
-                    "description": "User not found"
-            },
-            "500": {
-              "description": "Server error"
-            }
+  "/user/{userID}": {
+    "put": {
+      "summary": "Update a user",
+      "parameters": [
+        {
+          "name": "userID",
+          "in": "path",
+          "required": true,
+          "type": "string"
         },
-        "tags": ["Users"]
-        },
-        "delete": {
-            "summary": "Delete a user by ID",
-            "parameters":[{
-              "name": "userID",
-              "in": "path",
-              "required": true,
-              "type":"string"
-            }],
-            "responses": {
-                "204": {
-                    "description": "User deleted successfully",
-                    "schema":{
-                      "$ref": "#/definitions/User"
-                    }
-            },
-            "404": {
-                "description": "User not found"
-            },
-            "500": {
-                "description": "Server error"
-            }
-        },
-        "tags": ["Users"]
+        {
+          "name": "user",
+          "in": "body",
+          "description": "The updated user object",
+          "required": true,
+          "schema": {
+            "$ref": "#/definitions/User"
+          }
         }
+      ],
+      "responses": {
+        "200": {
+          "description": "User updated successfully",
+          "schema": {
+            "$ref": "#/definitions/User"
+          }
+        },
+        "400": {
+          "description": "Bad Request"
+        },
+        "500": {
+          "description": "Server error"
+        }
+      },
+      "tags": [ "Users" ]
     },
+    "get": {
+      "summary": "Get user by ID",
+      "parameters": [
+        {
+          "name": "userID",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "A single user",
+          "schema": {
+            "$ref": "#/definitions/User"
+          }
+        },
+        "404": {
+          "description": "User not found"
+        },
+        "500": {
+          "description": "Server error"
+        }
+      },
+      "tags": [ "Users" ]
+    },
+    "delete": {
+      "summary": "Delete a user by ID",
+      "parameters": [
+        {
+          "name": "userID",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }
+      ],
+      "responses": {
+        "204": {
+          "description": "User deleted successfully",
+          "schema": {
+            "$ref": "#/definitions/User"
+          }
+        },
+        "404": {
+          "description": "User not found"
+        },
+        "500": {
+          "description": "Server error"
+        }
+      },
+      "tags": [ "Users" ]
+    }
+  },
     "/user/login": {
         "get": {
             "summary": "User login",
@@ -484,12 +488,12 @@
         "tags": ["Spellbooks"]
         }
     },
-    "/spellbook/{SpellbookId}": {
+    "/spellbook/{spellbookId}": {
         "put": {
         "summary": "Update a character's spellbook",
         "parameters": [
           { "type":"string",
-          "name": "characterId",
+          "name": "spellbookId",
           "in": "path",
           "required": true
         },
@@ -523,7 +527,7 @@
         "parameters": [
           {
             "type": "string",
-            "name": "SpellbookId",
+            "name": "spellbookId",
             "in": "path",
             "required": true
           }],

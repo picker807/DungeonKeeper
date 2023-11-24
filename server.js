@@ -1,7 +1,6 @@
 const createError = require("http-errors");
 const express = require("express");
 const path = require("path");
-const bodyParser = require("body-parser");
 const port = process.env.PORT || 3000;
 const cors = require("cors");
 const db = require("./models");
@@ -27,7 +26,7 @@ app
   //.use(passport.initialize())
   //.use(passport.session())
   .use(cors())
-  // .use(bodyParser.json())
+  .use(express.json())
   .use("/", require("./routes"))
   .use((req, res, next) => {
     res.setHeader("Access-Control-Allow-Origin", "*");
@@ -42,10 +41,10 @@ app
     );
     next();
   })
-  //.use(errorHandler);
+  .use(errorHandler);
 
-// Routes
-// .use(express.json())
+
+ 
 
 // view engine setup
 //app.set('views', path.join(__dirname, 'views'));
@@ -54,9 +53,9 @@ app
 //.use(express.static(path.join(__dirname, 'public'))
 
 // catch 404 and forward to error handler
-//app.use(function(req, res, next) {
-//  next(createError(404));
-//});
+app.use(function(req, res, next) {
+  next(createError(404));
+});
 
 // error handler
 app.use(function (err, req, res, next) {

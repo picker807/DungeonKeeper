@@ -4,10 +4,10 @@ var router = express.Router();
 
 router
 
-  .use('/users', require('./users' ))
-  .use('/characters', require('./characters'))
+  .use('/user', require('./users' ))
+  .use('/character', require('./characters'))
   .use("/spells", require("./spells"))
-  .use('/spellbooks', require('./spellbooks'))
+  .use('/spellbook', require('./spellbooks'))
   .use("/", require("./swagger"));
 
 module.exports = router;
