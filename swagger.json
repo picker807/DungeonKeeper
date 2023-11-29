@@ -5,10 +5,10 @@
     "description": "A database that organizes spells for Advanced Dungeons and Dragons Second Edition. Users can view spells, create characters and organize spellbooks based on their character.",
     "version": "1.0.0"
 },
-"host": "localhost:3000",
+"host": "dungeonkeeperprjt.onrender.com",
 "basePath": "/",
 "schemes": [
-"http"
+"https"
 ],
 "tags":[{
     "name":"Users",
