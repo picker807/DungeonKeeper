@@ -21,9 +21,7 @@ const userSchema = new mongoose.Schema({
     characters:{
         type: Array,
         default:[]
-    },
-    tasksAssigned: [String]
-
+    }
 })
 
 module.exports = mongoose.model('users', userSchema);

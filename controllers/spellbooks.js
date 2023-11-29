@@ -59,12 +59,6 @@ async function getOneSpellbook(req, res, next) {
 async function updateSpellbook(req, res, next) {
     try {
         const id = req.params.id;
-
-        const validationError = await Spellbook.validate(req.body);
-        if (validationError) {
-            return res.status(400).json({ error: validationError.message });
-        }
-
         Spellbook
             .updateOne({ _id: id }, { $set: req.body })
             .then((data) => {
