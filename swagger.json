@@ -562,6 +562,12 @@
         "email": {
           "type": "string"
         },
+        "characters":{
+          "type":"array",
+          "items":{
+            "type":"string"
+          }
+        },
         "tasksAssigned": {
           "type": "string"
         }

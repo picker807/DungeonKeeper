@@ -18,7 +18,12 @@ const userSchema = new mongoose.Schema({
         match:[/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
         'A valid email address is required']
     },
+    characters:{
+        type: Array,
+        default:[]
+    },
     tasksAssigned: [String]
+
 })
 
 module.exports = mongoose.model('users', userSchema);
