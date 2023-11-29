@@ -1,3 +1,4 @@
+
 const db = require("../models");
 const Spell = db.spell;
 
@@ -22,11 +23,21 @@ const getAllSpells = async (req, res, next) => {
 
 // Create a new Spell
 async function createSpell(req, res, next) {
+try{
+    const spellData = new Spell(req.body);
+    Spell.create(spellData).then((createdSpell)=>res.status(201).send(createdSpell))
+}catch(err){
+    if(err.name === "ValidationError"){
+        res.status(400).json({
+            message:err.message||"An error occured while inserting your spell. Please try again."
+        });
+    }else{
+        next(err);
+    }
+}
 
-    const spell = new Spell(req.body);
-
-    spell
-        .save()
+/*spell
+        //.save()
         .then((data) => {
             res.status(201).send(data);
         })
@@ -38,8 +49,8 @@ async function createSpell(req, res, next) {
             } else {
                 next(err);
             }
-        });
-}
+        });*/
+};
 
 // Get a spell by ID
 async function getOneSpell(req, res, next) {
