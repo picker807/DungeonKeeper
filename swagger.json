@@ -334,7 +334,7 @@
         }
       ],
       "responses": {
-        "200": {
+        "204": {
           "description": "User updated successfully",
           "schema": {
             "$ref": "#/definitions/User"
@@ -386,10 +386,20 @@
         }
       ],
       "responses": {
-        "204": {
+        "200": {
           "description": "User deleted successfully",
           "schema": {
-            "$ref": "#/definitions/User"
+          "type": "object",
+          "properties":{
+            "acknowledged":{
+              "type": "string",
+              "description": "Indicates if the deletion was acknowledged"
+            },
+            "deletedCount":{
+              "type": "integer",
+              "description": "The number of users deleted (in this case, 1)"
+            }
+          }
           }
         },
         "404": {
@@ -567,9 +577,6 @@
           "items":{
             "type":"string"
           }
-        },
-        "tasksAssigned": {
-          "type": "string"
         }
       }
     },

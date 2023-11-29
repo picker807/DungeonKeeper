@@ -63,13 +63,6 @@ async function updateUser(req, res, next) {
         const id = req.params.id;
         console.log(id);
 
-        /*const validationError = await User.validate(req.body);
-        console.log(validationError);
-        if (validationError) {
-            console.log("validation error yes");
-            return res.status(400).json({ error: validationError.message });
-        }*/
-
         User
             .updateOne({ _id: id }, { $set: req.body })
             .then((data) => {

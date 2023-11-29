@@ -59,18 +59,13 @@ async function getOneCharacter(req, res, next) {
 async function updateCharacter(req, res, next) {
     try {
         const id = req.params.id;
-
-        const validationError = await Character.validate(req.body);
-        if (validationError) {
-            return res.status(400).json({ error: validationError.message });
-        }
-
-        Character
+            Character
             .updateOne({ _id: id }, { $set: req.body })
             .then((data) => {
                 res.status(204).send(data);
             })
     } catch (err) {
+        console.error("Validation Error:", error.errors)
         next(err);
     }
 
