@@ -92,7 +92,7 @@
           }
           ],
         "responses": {
-            "200": {
+            "204": {
             "description": "Spell updated successfully",
             "schema": {
               "$ref": "#/definitions/Spells"
@@ -142,11 +142,8 @@
             }
         ],
         "responses": {
-            "204": {
-            "description": "Spell deleted successfully",
-            "schema": {
-              "$ref": "#/definitions/Spells"
-            }
+            "200": {
+            "description": "Spell deleted successfully"
             },
             "404": {
               "description": "Spell not found"
@@ -255,7 +252,7 @@
               }
           ],
             "responses": {
-                "204": {
+                "200": {
                 "description": "Character deleted successfully"
             },
             "400":{"description": "Bad Request"},
@@ -518,7 +515,7 @@
         }
       ],
             "responses": {
-                "200": {
+                "204": {
                     "description": "Spellbook updated successfully",
                     "schema":{
                       "$ref":"#/definitions/Spellbooks"
@@ -543,10 +540,8 @@
           }],
             "responses": {
                 "204": {
-                  "description": "Spellbook deleted successfully",
-                  "schema": {
-                    "$ref": "#/definitions/Spellbooks"
-                    }
+                  "description": "Spellbook deleted successfully"
+                  
             },
             "404":{"description":"Spellbook not found"},
             "500": {
