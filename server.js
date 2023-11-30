@@ -5,6 +5,8 @@ const port = process.env.PORT || 3000;
 const cors = require("cors");
 const db = require("./models");
 const errorHandler = require("./middleware/errorHandler");
+require("dotenv").config();
+const { auth } = require("express-openid-connect");
 
 const passport = require("./config/passport");
 const session = require("express-session");
@@ -12,6 +14,15 @@ const crypto = require("crypto");
 
 const app = express();
 const secret = crypto.randomBytes(64).toString("hex");
+
+const config = {
+  authRequired: false,
+  auth0Logout: true,
+  secret: process.env.SECRET,
+  baseURL: process.env.BASE_URL,
+  clientID: process.env.CLIENT_ID,
+  issuerBaseURL: process.env.ISSUER_BASE_URL,
+};
 
 app
   .use(
@@ -27,6 +38,7 @@ app
   //.use(passport.session())
   .use(cors())
   .use(express.json())
+  .use(auth(config))
   .use("/", require("./routes"))
   .use((req, res, next) => {
     res.setHeader("Access-Control-Allow-Origin", "*");
@@ -43,9 +55,6 @@ app
   })
   .use(errorHandler);
 
-
- 
-
 // view engine setup
 //app.set('views', path.join(__dirname, 'views'));
 //app.set('view engine', 'pug');
@@ -53,7 +62,7 @@ app
 //.use(express.static(path.join(__dirname, 'public'))
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   next(createError(404));
 });
 
@@ -66,6 +75,10 @@ app.use(function (err, req, res, next) {
   // render the error page
   res.status(err.status || 500);
   res.render("error");
+});
+
+app.get("/", (req, res) => {
+  res.send(req.oidc.isAuthenticated() ? "Logged in" : "Logged out");
 });
 
 // Connect to Database
