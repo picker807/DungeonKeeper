@@ -79,9 +79,14 @@ db.mongoose
       console.log(`DB connected and Server is running on port ${port}`);
     });
   })
-  .catch((err) => {
-    console.log("Cannot connect to database.", err);
-    process.exit();
-  });
+    .catch((err) => {
+        console.log("Cannot connect to database.", err);
+        if (process.env.NODE_ENV !== 'test') {
+            process.exit(1); // Exit only if it's not a test environment
+        } else {
+            throw new Error("Database connection failed."); // Throw an error in test environment
+        }
+    });
+
 
 module.exports = app;
