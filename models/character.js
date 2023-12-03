@@ -16,10 +16,10 @@ const charactersSchema = new mongoose.Schema({
     required: [true, "Character level is required"],
   },
   spellbook: {
-    type: String,
+    type: Array,
     //type: mongoose.Schema.Types.ObjectId,
     // this needs to match the name of the spellbook model
-    //ref: "Spellbook",
+    default: [],
     required: [true, "Spellbook is required"],
   },
 });
