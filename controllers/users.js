@@ -4,7 +4,6 @@ const User = db.user;
 // Create a new user
 async function createUser(req, res, next) {
     
-    console.log(req.body);
     const user = new User(req.body);
 
     user
@@ -59,6 +58,7 @@ async function getOneUser(req, res, next) {
 
 // Update a user
 async function updateUser(req, res, next) {
+    console.log("PUT controller req: ", req.body)
     try {
         const id = req.params.id;
         console.log(id);

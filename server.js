@@ -25,21 +25,25 @@ const config = {
 };
 
 app
-  .use(
+.use(
     session({
-      secret: secret,
-      resave: true,
-      saveUninitialized: true,
+        secret: secret,
+        resave: true,
+        saveUninitialized: true,
     })
-  )
+)
 
-  // Passport Initialization Middleware
-  //.use(passport.initialize())
-  //.use(passport.session())
-  .use(cors())
-  .use(express.json())
-  .use(auth(config))
-  .use("/", require("./routes"))
+// Passport Initialization Middleware
+//.use(passport.initialize())
+//.use(passport.session())
+.use(cors())
+.use(express.json());
+
+if (process.env.NODE_ENV !== 'test') {
+    app.use(auth(config));
+}
+
+  app.use("/", require("./routes"))
   .use((req, res, next) => {
     res.setHeader("Access-Control-Allow-Origin", "*");
     res.setHeader(

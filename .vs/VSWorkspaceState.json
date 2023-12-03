@@ -3,9 +3,12 @@
     "",
     "\\config",
     "\\controllers",
+    "\\middleware",
     "\\models",
-    "\\routes"
+    "\\public",
+    "\\routes",
+    "\\tests"
   ],
-  "SelectedNode": "\\package.json",
+  "SelectedNode": "\\routes\\spellbooks.js",
   "PreviewInSolutionExplorer": false
 }
