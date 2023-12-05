@@ -5,7 +5,7 @@
     "description": "A database that organizes spells for Advanced Dungeons and Dragons Second Edition. Users can view spells, create characters and organize spellbooks based on their character.",
     "version": "1.0.0"
 },
-"host": "dungeonkeeperprjt.onrender.com",
+"host": "dungeon-keeper.onrender.com",
 "basePath": "/",
 "schemes": [
 "https"
@@ -409,35 +409,6 @@
       "tags": [ "Users" ]
     }
   },
-    "/user/login": {
-        "get": {
-            "summary": "User login",
-
-            "responses": {
-                "200": {
-                    "description": "User logged in successfully",
-                    "schema":{
-                      "$ref": "#/definitions/User"
-                    }
-            }
-        },
-        "tags": ["Users"]
-        }
-    },
-    "/user/logout": {
-        "get": {
-            "summary": "User logout",
-            "responses": {
-                "200": {
-                    "description": "User logged out successfully",
-                    "schema":{
-                      "$ref": "#/definitions/User"
-                    }
-            }
-        },
-        "tags": ["Users"]
-        }
-    },
     "/spellbook": {
         "post": {
         "summary": "Add a spell to a character's spellbook",
@@ -633,7 +604,10 @@
           "type":"number"
         },
         "spellbook":{
-          "type":"string"
+          "type":"array",
+          "items":{
+            "type":"string"
+          }
         }
     }
 
