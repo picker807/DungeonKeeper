@@ -17,8 +17,6 @@ const charactersSchema = new mongoose.Schema({
   },
   spellbook: {
     type: Array,
-    //type: mongoose.Schema.Types.ObjectId,
-    // this needs to match the name of the spellbook model
     default: [],
     required: [true, "Spellbook is required"],
   },

@@ -36,20 +36,6 @@ try{
     }
 }
 
-/*spell
-        //.save()
-        .then((data) => {
-            res.status(201).send(data);
-        })
-        .catch((err) => {
-            if (err.name === "ValidationError") {
-                res.status(400).json({
-                    message: err.message || 'An error occurred while creating the spell.'
-                });
-            } else {
-                next(err);
-            }
-        });*/
 };
 
 // Get a spell by ID
