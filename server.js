@@ -1,14 +1,12 @@
 const createError = require("http-errors");
 const express = require("express");
-const path = require("path");
 const port = process.env.PORT || 3000;
 const cors = require("cors");
 const db = require("./models");
 const errorHandler = require("./middleware/errorHandler");
 require("dotenv").config();
-const { auth } = require("express-openid-connect");
+const { auth, requiresAuth } = require("express-openid-connect");
 
-const passport = require("./config/passport");
 const session = require("express-session");
 const crypto = require("crypto");
 
@@ -33,15 +31,44 @@ app
     })
 )
 
-// Passport Initialization Middleware
-//.use(passport.initialize())
-//.use(passport.session())
 .use(cors())
 .use(express.json());
 
 if (process.env.NODE_ENV !== 'test') {
     app.use(auth(config));
 }
+
+// Function to create a user immediately after authentication
+const createAutomaticUser = async (req, res, next) => {
+    const User = db.user;
+
+    try {
+        const { sub, email } = req.oidc.user;
+
+        // Check if the user already exists in the database
+        const existingUser = await User.findOne({ email });
+
+        if (existingUser) {
+            return next(); 
+        }
+
+        // Create a new user
+        const newUser = new User({
+            username: sub,
+            email,
+            
+        });
+
+        await newUser.save();
+        next(); 
+    } catch (err) {
+        next(err);
+    }
+};
+
+// Apply the createAutomaticUser middleware after authentication
+app.use(requiresAuth(), createAutomaticUser);
+
 
   app.use("/", require("./routes"))
   .use((req, res, next) => {
@@ -59,13 +86,6 @@ if (process.env.NODE_ENV !== 'test') {
   })
   .use(errorHandler);
 
-// view engine setup
-//app.set('views', path.join(__dirname, 'views'));
-//app.set('view engine', 'pug');
-
-//.use(express.static(path.join(__dirname, 'public'))
-
-// catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));
 });

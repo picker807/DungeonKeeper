@@ -1,8 +1,6 @@
 var express = require("express");
 var router = express.Router();
 const { requiresAuth } = require("express-openid-connect");
-//const middleware = require("../middleware/middleware");
-
 
 if (process.env.NODE_ENV !== 'test') {
     router
