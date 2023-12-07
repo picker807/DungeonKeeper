@@ -529,9 +529,6 @@
     "User":{
       "type":"object",
       "properties": {
-        "githubId": {
-          "type": "string"
-        },
         "username": {
           "type": "string"
         },
