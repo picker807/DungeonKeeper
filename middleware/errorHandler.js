@@ -1,7 +1,7 @@
 const createHttpError = require("http-errors");
 
 const errorHandler = (error, req, res, next) => {
-    console.log("Error: ", error)
+  console.log("Error: ", error);
   console.error(error);
   let errorMessage = "An unknown error occured";
   let statusCode = 500;
