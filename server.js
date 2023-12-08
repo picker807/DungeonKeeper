@@ -1,12 +1,14 @@
 const createError = require("http-errors");
 const express = require("express");
+const port = process.env.PORT || 3000;
 const cors = require("cors");
-const session = require("express-session");
-const crypto = require("crypto");
-const { auth, requiresAuth } = require("express-openid-connect");
 const db = require("./models");
 const errorHandler = require("./middleware/errorHandler");
-const port = process.env.PORT || 3000;
+require("dotenv").config();
+const { auth, requiresAuth } = require("express-openid-connect");
+
+const session = require("express-session");
+const crypto = require("crypto");
 
 const app = express();
 const secret = crypto.randomBytes(64).toString("hex");
@@ -20,24 +22,22 @@ const config = {
   issuerBaseURL: process.env.ISSUER_BASE_URL,
 };
 
-// Use express-session middleware
-app.use(
-  session({
-    secret: secret,
-    resave: true,
-    saveUninitialized: true,
-  })
-);
+app
+  .use(
+    session({
+      secret: secret,
+      resave: true,
+      saveUninitialized: true,
+    })
+  )
 
-// Enable CORS
-app.use(cors());
+  .use(cors())
+  .use(express.json());
 
-// Parse JSON bodies
-app.use(express.json());
-
-// Apply authentication middleware only in non-test environments
 if (process.env.NODE_ENV !== "test") {
   app.use(auth(config));
+  // Apply the createAutomaticUser middleware after authentication
+  app.use(requiresAuth(), createAutomaticUser);
 }
 
 // Function to create a user immediately after authentication
@@ -67,36 +67,32 @@ const createAutomaticUser = async (req, res, next) => {
   }
 };
 
-// Apply the createAutomaticUser middleware after authentication
-app.use(requiresAuth(), createAutomaticUser);
+app
+  .use("/", require("./routes"))
+  .use((req, res, next) => {
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.setHeader(
+      "Access-Control-Allow-Headers",
+      "Origin, X-Requested-With, Content-Type, Accept, Z-Key"
+    );
+    res.setHeader("Content-Type", "application/json");
+    res.setHeader(
+      "Access-Control-Allow-Methods",
+      "GET, POST, PUT, DELETE, OPTIONS"
+    );
+    next();
+  })
+  .use(errorHandler);
 
-// Set up CORS headers
-app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept, Z-Key"
-  );
-  res.setHeader("Content-Type", "application/json");
-  res.setHeader(
-    "Access-Control-Allow-Methods",
-    "GET, POST, PUT, DELETE, OPTIONS"
-  );
-  next();
-});
-
-// Load routes
-app.use("/", require("./routes"));
-
-// Error handling for 404 Not Found
-app.use((req, res, next) => {
+app.use(function (req, res, next) {
   next(createError(404));
 });
 
-// General error handler
-app.use(errorHandler);
+app.get("/", (req, res) => {
+  res.send(req.oidc.isAuthenticated() ? "Logged in" : "Logged out");
+});
 
-// Start the server and connect to the database
+// Connect to Database
 db.mongoose
   .connect(db.url, {
     useNewUrlParser: true,
@@ -108,11 +104,11 @@ db.mongoose
     });
   })
   .catch((err) => {
-    console.log("Cannot connect to the database.", err);
+    console.log("Cannot connect to database.", err);
     if (process.env.NODE_ENV !== "test") {
       process.exit(1); // Exit only if it's not a test environment
     } else {
-      throw new Error("Database connection failed."); // Throw an error in the test environment
+      throw new Error("Database connection failed."); // Throw an error in test environment
     }
   });
 
