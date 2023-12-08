@@ -1,9 +1,7 @@
-const db = require("../models/users");
+const User = require("../models/user");
 
 // Function to create a user immediately after authentication
 const createAutomaticUser = async (req, res, next) => {
-  const User = db.user;
-
   try {
     const { sub, email } = req.oidc.user;
 
