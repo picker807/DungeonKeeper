@@ -22,24 +22,6 @@ const config = {
   issuerBaseURL: process.env.ISSUER_BASE_URL,
 };
 
-app
-  .use(
-    session({
-      secret: secret,
-      resave: true,
-      saveUninitialized: true,
-    })
-  )
-
-  .use(cors())
-  .use(express.json());
-
-if (process.env.NODE_ENV !== "test") {
-  app.use(auth(config));
-  // Apply the createAutomaticUser middleware after authentication
-  app.use(requiresAuth(), createAutomaticUser);
-}
-
 // Function to create a user immediately after authentication
 const createAutomaticUser = async (req, res, next) => {
   const User = db.user;
@@ -66,6 +48,24 @@ const createAutomaticUser = async (req, res, next) => {
     next(err);
   }
 };
+
+app
+  .use(
+    session({
+      secret: secret,
+      resave: true,
+      saveUninitialized: true,
+    })
+  )
+
+  .use(cors())
+  .use(express.json());
+
+if (process.env.NODE_ENV !== "test") {
+  app.use(auth(config));
+  // Apply the createAutomaticUser middleware after authentication
+  app.use(requiresAuth(), createAutomaticUser);
+}
 
 app
   .use("/", require("./routes"))
