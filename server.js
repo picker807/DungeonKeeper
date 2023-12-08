@@ -39,9 +39,10 @@ app.use(express.json());
 // Apply authentication middleware only in non-test environments
 if (process.env.NODE_ENV !== "test") {
   app.use(auth(config));
-  // Apply the createAutomaticUser middleware after authentication
-  app.use(requiresAuth(), createAutomaticUser);
 }
+
+// Apply the createAutomaticUser middleware after authentication
+app.use(requiresAuth(), createAutomaticUser);
 
 // Set up CORS headers
 app.use((req, res, next) => {
