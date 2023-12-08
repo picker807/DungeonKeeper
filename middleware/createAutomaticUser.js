@@ -1,4 +1,4 @@
-const db = require("../models/user");
+const db = require("../models/users");
 
 // Function to create a user immediately after authentication
 const createAutomaticUser = async (req, res, next) => {
